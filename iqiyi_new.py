@@ -149,7 +149,7 @@ class Iqiyi:
         except:
             self.print_now('推送失败')
 
-    def bark(title: str, content: str) -> None:
+    def bark(self,title: str, content: str) -> None:
         """
         使用 bark 推送消息。
         """
@@ -157,12 +157,12 @@ class Iqiyi:
             print("bark 服务的 BARK_PUSH 未设置!!\n取消推送")
             return
         print("bark 服务启动")
-    
+
         if push_config.get("BARK_PUSH").startswith("http"):
             url = f'{push_config.get("BARK_PUSH")}/{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}'
         else:
             url = f'https://api.day.app/{push_config.get("BARK_PUSH")}/{urllib.parse.quote_plus(title)}/{urllib.parse.quote_plus(content)}'
-    
+
         bark_params = {
             "BARK_ARCHIVE": "isArchive",
             "BARK_GROUP": "group",
@@ -180,7 +180,7 @@ class Iqiyi:
         if params:
             url = url + "?" + params.rstrip("&")
         response = requests.get(url).json()
-    
+
         if response["code"] == 200:
             print("bark 推送成功！")
         else:
@@ -391,8 +391,8 @@ class Iqiyi:
         self.get_userinfo()
         if pushplus_token != "":
             self.pushplus("爱奇艺每日任务签到", self.user_info)
-        if tgbot_token != "" and tg_userId != "":
-            self.tgpush(self.user_info)
+        if push_config["BARK_PUSH"] != "":
+            self.bark("爱奇艺每日任务签到",self.user_info)
 
 
 if __name__ == '__main__':
