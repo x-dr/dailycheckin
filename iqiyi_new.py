@@ -230,7 +230,7 @@ class Iqiyi:
         data = self.req(url)
         msg = data['data']['growth']
         try:
-            self.user_info = f"查询成功: 到期时间{msg['deadline']}\t当前等级为{msg['level']}\n\t今日获得成长值{msg['todayGrowthValue']}\t总成长值{msg['growthvalue']}\t距离下一等级还差{msg['distance']}成长值"
+            self.user_info = f"查询成功:\n\t到期时间{msg['deadline']}\n\t当前等级为{msg['level']}\n\t今日获得成长值{msg['todayGrowthValue']}\n\t总成长值{msg['growthvalue']}\n\t距离下一等级还差{msg['distance']}成长值"
             self.print_now(self.user_info)
         except:
             self.user_info = f"查询失败,未获取到用户信息"
