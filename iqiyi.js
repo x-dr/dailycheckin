@@ -127,8 +127,8 @@ const Checkin = async () => {
     };
     const post_date = {
         "natural_month_sign": {
-            "agentType": "1",
-            "agentversion": "1",
+            "agentType": "12",
+            "agentversion": "14.9.0",
             "authCookie": P00001,
             "qyid": md5Crypto(stringRandom(16)),
             "taskCode": "iQIYI_mofhr",
