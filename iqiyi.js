@@ -132,7 +132,8 @@ const Checkin = async () => {
             "authCookie": P00001,
             "qyid": md5Crypto(stringRandom(16)),
             "taskCode": "iQIYI_mofhr",
-            "verticalCode": "iQIYI"
+            "verticalCode": "iQIYI",
+            "dfp":dfp
         }
     };
     const sign = k("UKobMjDMsDoScuWOfp6F", sign_date, {
