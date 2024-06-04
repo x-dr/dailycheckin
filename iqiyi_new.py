@@ -12,19 +12,19 @@
 # export iqy_ck = ''
 # export iqiyi_dfp = ''
 """
+import os
+import requests
+import urllib.parse
+from re import findall
+from os import environ, system
+from sys import exit, stdout
+from string import digits, ascii_lowercase, ascii_uppercase
+from hashlib import md5 as md5Encode
+from json import dumps
+from random import randint, choice
+from time import sleep, time
 cookie = ""
 iqiyi_dfp = ""
-from time import sleep, time
-from random import randint, choice
-from json import dumps
-from hashlib import md5 as md5Encode
-from string import digits, ascii_lowercase, ascii_uppercase
-from sys import exit, stdout
-from os import environ, system
-from re import findall
-import urllib.parse
-import requests
-import os
 
 
 try:
@@ -38,25 +38,27 @@ except:
     print("安装完成 脚本退出 请重新执行")
     exit(0)
 iqy_ck = environ.get("iqy_ck") if environ.get("iqy_ck") else cookie
-get_iqiyi_dfp = environ.get("get_iqiyi_dfp") if environ.get("get_iqiyi_dfp") else False
-pushplus_token = environ.get("PUSH_PLUS_TOKEN") if environ.get("PUSH_PLUS_TOKEN") else ""
+get_iqiyi_dfp = environ.get("get_iqiyi_dfp") if environ.get(
+    "get_iqiyi_dfp") else False
+pushplus_token = environ.get("PUSH_PLUS_TOKEN") if environ.get(
+    "PUSH_PLUS_TOKEN") else ""
 
 
-
-tgbot_token = environ.get("TG_BOT_TOKEN") if environ.get("TG_BOT_TOKEN") else ""
+tgbot_token = environ.get("TG_BOT_TOKEN") if environ.get(
+    "TG_BOT_TOKEN") else ""
 tg_userId = environ.get("TG_USER_ID") if environ.get("TG_USER_ID") else ""
 tg_push_api = environ.get("TG_API_HOST") if environ.get("TG_API_HOST") else ""
 if iqy_ck == "":
     print("未填写cookie 青龙可在环境变量设置 iqy_ck 或者在本脚本文件上方将获取到的cookie填入cookie中")
     exit(0)
 if "__dfp" in iqy_ck:
-    iqiyi_dfp = findall(r"__dfp=(.*?)(;|$)", iqy_ck)[0][0]
-    iqiyi_dfp = iqiyi_dfp.split("@")[0]
+    iqiyi_dfp = findall(r"__dfp=(.*?)(;|$)", iqy_ck)[0][0] 
+    # iqiyi_dfp = iqiyi_dfp.split("@")[0]
 if "P00001" in iqy_ck:
     iqy_ck = findall(r"P00001=(.*?)(;|$)", iqy_ck)[0][0]
-if iqiyi_dfp == "":
-    iqiyi_dfp = environ.get("iqiyi_dfp") if environ.get(
-        "iqiyi_dfp") else "a18af56a9b6a224272ab8ed00d1a587078cd5c8ab119b2a4a689d5a22f06bcbd8b"
+# if iqiyi_dfp == "":
+#     iqiyi_dfp = environ.get("iqiyi_dfp") if environ.get(
+#         "iqiyi_dfp") else "a18af56a9b6a224272ab8ed00d1a587078cd5c8ab119b2a4a689d5a22f06bcbd8b"
 # 通知服务
 # fmt: off
 push_config = {
@@ -275,7 +277,8 @@ class Iqiyi:
                 "agentversion": 1,
                 "authCookie": self.ck,
                 "qyid": self.qyid,
-                "verticalCode": "iQIYI"
+                "verticalCode": "iQIYI",
+                "dfp":self.dfp
             }
         }
         data = self.req(url, "post", body)
