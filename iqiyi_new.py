@@ -53,9 +53,11 @@ if iqy_ck == "":
     exit(0)
 if "__dfp" in iqy_ck:
     iqiyi_dfp = findall(r"__dfp=(.*?)(;|$)", iqy_ck)[0][0] 
+    print(f"获取到的iqiyi_dfp: {iqiyi_dfp}")
     # iqiyi_dfp = iqiyi_dfp.split("@")[0]
 if "P00001" in iqy_ck:
     iqy_ck = findall(r"P00001=(.*?)(;|$)", iqy_ck)[0][0]
+    print(f"获取到的P00001: {iqy_ck}")
 # if iqiyi_dfp == "":
 #     iqiyi_dfp = environ.get("iqiyi_dfp") if environ.get(
 #         "iqiyi_dfp") else "a18af56a9b6a224272ab8ed00d1a587078cd5c8ab119b2a4a689d5a22f06bcbd8b"
