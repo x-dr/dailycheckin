@@ -369,8 +369,8 @@ class Iqiyi:
                 break
 
     def main(self):
-        if get_iqiyi_dfp:
-            self.get_dfp()
+        # if get_iqiyi_dfp:
+        self.get_dfp()
         self.getUid()
         self.get_sign()
         self.start()
