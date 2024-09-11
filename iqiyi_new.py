@@ -37,9 +37,7 @@ except:
     system("pip3 install requests")
     print("安装完成 脚本退出 请重新执行")
     exit(0)
-iqy_ck = environ.get("iqy_ck") if environ.get("iqy_ck") else cookie
-get_iqiyi_dfp = environ.get("get_iqiyi_dfp") if environ.get(
-    "get_iqiyi_dfp") else False
+
 pushplus_token = environ.get("PUSH_PLUS_TOKEN") if environ.get(
     "PUSH_PLUS_TOKEN") else ""
 
@@ -48,16 +46,7 @@ tgbot_token = environ.get("TG_BOT_TOKEN") if environ.get(
     "TG_BOT_TOKEN") else ""
 tg_userId = environ.get("TG_USER_ID") if environ.get("TG_USER_ID") else ""
 tg_push_api = environ.get("TG_API_HOST") if environ.get("TG_API_HOST") else ""
-if iqy_ck == "":
-    print("未填写cookie 青龙可在环境变量设置 iqy_ck 或者在本脚本文件上方将获取到的cookie填入cookie中")
-    exit(0)
-if "__dfp" in iqy_ck:
-    iqiyi_dfp = findall(r"__dfp=(.*?)(;|$)", iqy_ck)[0][0] 
-    print(f"获取到的iqiyi_dfp: {iqiyi_dfp}")
-    # iqiyi_dfp = iqiyi_dfp.split("@")[0]
-if "P00001" in iqy_ck:
-    iqy_ck = findall(r"P00001=(.*?)(;|$)", iqy_ck)[0][0]
-    print(f"获取到的P00001: {iqy_ck}")
+
 # if iqiyi_dfp == "":
 #     iqiyi_dfp = environ.get("iqiyi_dfp") if environ.get(
 #         "iqiyi_dfp") else "a18af56a9b6a224272ab8ed00d1a587078cd5c8ab119b2a4a689d5a22f06bcbd8b"
@@ -403,5 +392,28 @@ class Iqiyi:
 
 
 if __name__ == '__main__':
-    iqiyi = Iqiyi(iqy_ck, iqiyi_dfp)
-    iqiyi.main()
+    iqy_ck = environ.get("iqy_ck") if environ.get("iqy_ck") else cookie
+    # get_iqiyi_dfp = environ.get("get_iqiyi_dfp") if environ.get("get_iqiyi_dfp") else False
+    if not iqy_ck:
+        print("未填写cookie 青龙可在环境变量设置 iqy_ck 或者在本脚本文件上方将获取到的cookie填入cookie中")
+        exit(0)
+
+    # 处理多个用 & 分割的 cookie
+    cookie_list = iqy_ck.split('&')
+    
+    for ck in cookie_list:
+        iqiyi_dfp = None
+        
+        # 提取 __dfp
+        if "__dfp" in ck:
+            iqiyi_dfp = findall(r"__dfp=(.*?)(;|$)", ck)[0][0]
+            print(f"获取到的iqiyi_dfp: {iqiyi_dfp}")
+        
+        # 提取 P00001
+        if "P00001" in ck:
+            iqy_ck = findall(r"P00001=(.*?)(;|$)", ck)[0][0]
+            print(f"获取到的P00001: {iqy_ck}")
+
+        # 初始化并执行 Iqiyi 类
+        iqiyi = Iqiyi(iqy_ck, iqiyi_dfp)
+        iqiyi.main()
